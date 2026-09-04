@@ -1,8 +1,6 @@
 <div align="center">
 
-<!-- Banner: once you send the generated image, save it as docs/images/banner.png and
-     uncomment the line below (remove the <!-- and --> around it) to show it here. -->
-<!-- <img src="docs/images/banner.png" alt="MyoWare Gesture-FPGA banner" width="100%"> -->
+<img src="docs/images/banner.png" alt="MyoWare Gesture-FPGA banner" width="100%">
 
 # MyoWare Gesture-FPGA
 
@@ -78,6 +76,10 @@ REST stays flat and quiet; CLOSE and OPEN both swing much harder — that gap is
 
 ## Hardware
 
+<table>
+<tr>
+<td width="50%">
+
 | Component | Detail |
 |---|---|
 | 🔬 Sensor | 2× MyoWare 2.0 Muscle Sensor (flexor + extensor placement) |
@@ -85,6 +87,14 @@ REST stays flat and quiet; CLOSE and OPEN both swing much harder — that gap is
 | 🖥️ Target board | Avnet Ultra96-V2 |
 | ⚡ DPU | `DPUCZDX8G_ISA1_B1600_0101000016010404` |
 | 🦾 Actuator | Dynamixel XC430-W240-T |
+
+</td>
+<td width="50%">
+<img src="docs/images/hardware.jpg" alt="Prosthetic hand hardware with EMG-driven actuation" width="100%">
+<sub>The actuated hand rig this project's predictions will drive.</sub>
+</td>
+</tr>
+</table>
 
 ## Dataset
 
