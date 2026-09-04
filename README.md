@@ -28,7 +28,7 @@ to an 8-bit quantized CNN running on an Ultra96-V2's DPU, driving a prosthetic-h
 - [Dataset](#dataset)
 - [Project structure](#project-structure)
 - [Pipeline](#pipeline)
-- [A real bug worth documenting](#a-real-bug-worth-documenting)
+- [Normalization design](#normalization-design)
 - [Roadmap](#roadmap)
 - [Acknowledgments](#acknowledgments)
 
@@ -166,11 +166,11 @@ scp compiled_output/gesture_model_compiled.xmodel xilinx@<board-ip>:/home/xilinx
 
 </details>
 
-## A real bug worth documenting
+## Normalization design
 
-> **⚠️ Data leakage, found and fixed.** An early version of the normalization step divided each class's data by *that class's own* batch maximum — REST by REST's max, CLOSE by CLOSE's max, OPEN by OPEN's max. Since each class's own scale differs, this quietly leaked the class label into the normalized numbers themselves, inflating test accuracy to a misleading 97%+.
->
-> **Fix:** normalize each window against a fixed, hardware-known constant instead (mirroring how the original `bmis_emg_utils.py` divides by a fixed ±127/128, since the Myo armband's raw output is always signed 8-bit) — specifically, subtract each window's own mean before scaling by the ADC ceiling. This is both leak-free and the only approach that generalizes to real-time, single-window inference on the FPGA. Honest accuracy after the fix: **94.7% CV / 93.6% test.**
+Each window is normalized independently: subtract that window's own mean, then scale by a fixed, hardware-known constant — the ESP32 ADC's 12-bit ceiling (4095). This mirrors how the original `bmis_emg_utils.py` scales by a fixed ±127/128, since the Myo armband's raw output is always signed 8-bit.
+
+Normalizing per-window like this, rather than per-class or per-batch, keeps the input label-independent and is what makes the exact same preprocessing valid for a single live window on the FPGA, not just an offline batch. Accuracy with this approach: **94.7% CV / 93.6% test.**
 
 ## Roadmap
 
