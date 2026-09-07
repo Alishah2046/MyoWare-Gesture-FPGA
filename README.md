@@ -119,6 +119,10 @@ MyoWare-Gesture-FPGA/
 ├── compiled_output/
 │   └── gesture_model_compiled.xmodel   # Final artifact deployed to the board
 ├── checkpoint/                  # Best checkpoint saved during training
+├── firmware/                    # Arduino sketches for the on-body/actuator hardware
+│   ├── shield1/                 # ESP32 #1 — flexor sensor, streams over BLE
+│   ├── shield2/                 # ESP32 #2 — extensor sensor, streams over BLE
+│   └── openrb150_motor/         # OpenRB-150 — drives the XC430-W240-T on OPEN/CLOSE commands
 └── docs/images/                 # Assets used in this README
 ```
 
